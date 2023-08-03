@@ -1,12 +1,12 @@
 ---
-- name: Build and Push docker image
+- name: Running the container for testing
   hosts: deployment
   tasks:
     - name: Image Build
       shell: |
          docker rm -f server1
-         docker pull kbagwari035/devops
-         docker run -d --name=server1 -p 3000:3000 kbagwari035/devops
+         docker pull kbagwari035/reddit-app
+         docker run -d --name=server1 -p 3000:3000 kbagwari035/reddit-app
     - name: Wait for container port tp be up and available
       wait_for:
          host: master.example.com
