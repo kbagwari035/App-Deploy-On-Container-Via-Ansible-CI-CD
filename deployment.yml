@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: reddit-clone
-        image: kbagwari035/devops
+        image: kbagwari035/reddit-app
         ports:
         - containerPort: 3000
 ---
