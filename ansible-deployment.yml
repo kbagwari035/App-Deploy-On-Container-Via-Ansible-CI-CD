@@ -21,6 +21,3 @@
       copy:
        src: deployment.yml
        dest: /home/devops
-    - name: Deployment of App on kubernetes cluster
-      shell: |
-        kubectl apply -f deployment.yml
