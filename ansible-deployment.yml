@@ -1,0 +1,26 @@
+---
+- name: Build and Push docker image
+  hosts: deployment
+  tasks:
+    - name: Image Build
+      shell: |
+         docker rm -f server1
+         docker pull kbagwari035/devops
+         docker run -d --name=server1 -p 3000:3000 kbagwari035/devops
+    - name: Wait for container port tp be up and available
+      wait_for:
+         host: master.example.com
+         port: 3000
+         delay: 120
+    - name: Connect to intranet web server
+      uri:
+        url: http://master.example.com:3000
+        return_content: yes
+        status_code: 200
+    - name: Copy all required file for deployment.yml on kubernetes master
+      copy:
+       src: deployment.yml
+       dest: /home/devops
+    - name: Deployment of App on kubernetes cluster
+      shell: |
+        kubectl apply -f deployment.yml
